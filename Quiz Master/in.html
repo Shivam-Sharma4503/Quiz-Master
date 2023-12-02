@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Online Quiz</title>
+    <!-- Css start from here -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(90deg, orange, pink, yellow, rgb(0, 238, 255));
+            background-size: 400% 400%;
+            animation: gradient 50s ease;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #060404;
+            border-radius: 10px;
+            background-color: transparent;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: transparent;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background-color: rosybrown;
+        }
+
+        #result-container {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #next-btn {
+            border-color: transparent;
+
+        }
+
+        #next-btn:hover {
+            background-color: gray;
+        }
+     </style> <!--Css end here -->
+</head>
+
+<body>
+    <div id="quiz-container">
+        <h1>Online Quiz</h1>
+        <div id="question-container"></div>
+        <button id="next-btn"></button>
+        <div id="result-container"></div>
+    </div>
+<!-- Js start from here -->
+    <script> 
+        const quizData = [
+            {
+                question: 'What is the capital of France?',
+                options: ['Paris', 'Berlin', 'Madrid', 'Rome'],
+                correctAnswer: 'Paris'
+            },
+            {
+                question: 'Which planet is known as the Red Planet?',
+                options: ['Earth', 'Mars', 'Venus', 'Jupiter'],
+                correctAnswer: 'Mars'
+            },
+            {
+                question: 'What is the largest mammal in the world?',
+                options: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
+                correctAnswer: 'Blue Whale'
+            },
+            {
+                question: 'Where is Burj Khalifa situated?',
+                options: ['Dubai', 'U.S.A', 'U.K', 'Brazil'],
+                correctAnswer: 'Dubai'
+            },
+            {
+                question: 'What is the URL?',
+                options: ['A web browser', 'Searching engines', 'Address of the web page displayed on the internet', 'A computer software'],
+                correctAnswer: 'Address of the web page displayed on the internet'
+            },
+            {
+                question: 'Storage area for E-mail messages is called?',
+                options: ['Folder', 'File', 'Mail box', 'Directory'],
+                correctAnswer: 'Mail box'
+            },
+            {
+                question: 'Who is the P.M of India?',
+                options: ['Modi', 'Rahul', 'Amit', 'Ambani'],
+                correctAnswer: 'Modi'
+            },
+            {
+                question: 'Is web development fun?',
+                options: ['Kinda', 'YES!!!', 'Um no', 'IDK'],
+                correctAnswer: 'YES!!!'
+            },
+
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const questionContainer = document.getElementById('question-container');
+        const nextButton = document.getElementById('next-btn');
+        const resultContainer = document.getElementById('result-container');
+
+        function loadQuestion() {
+            const currentQuizData = quizData[currentQuestion];
+            questionContainer.innerHTML = `<h2>${currentQuizData.question}</h2>`;
+
+            currentQuizData.options.forEach((option, index) => {
+                questionContainer.innerHTML += `<button onclick="checkAnswer('${option}')">${option}</button>`;
+            });
+        }
+
+        function checkAnswer(selectedOption) {
+            const currentQuizData = quizData[currentQuestion];
+            if (selectedOption === currentQuizData.correctAnswer) {
+                score++;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            questionContainer.style.display = 'none';
+            nextButton.style.display = 'none';
+            resultContainer.innerHTML = `<p>Your Score: ${score} out of ${quizData.length}</p>`;
+        }
+
+        loadQuestion();
+    </script>
+<!-- Js end here -->
+</body>
+
+</html>
